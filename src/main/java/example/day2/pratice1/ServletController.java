@@ -25,7 +25,7 @@ public class ServletController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         System.out.println("ServletController.doGet");
         // *HTTP 요청시 포함된 매개변수 확인 , http://localhost:8080/day02/servlet?value= 아무값
-        int value = Integer.parseInt(req.getParameter("value"));
+        int value = Integer.getInteger(req.getParameter("value"));
         System.out.println("value = " + value);
         // *HTTP 요청시 클라이턴트에게 응답
         resp.getWriter().println("Client Response : "+value+2);
@@ -35,7 +35,7 @@ public class ServletController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         System.out.println("ServletController.doPost");
-        int value = Integer.parseInt(req.getParameter("value"));
+        int value = Integer.getInteger(req.getParameter("value"));
         System.out.println("value = " + value);
         resp.getWriter().println("Client Response : "+ value*2);
     }
@@ -43,7 +43,7 @@ public class ServletController extends HttpServlet {
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         System.out.println("ServletController.doPut");
-        int value = Integer.parseInt(req.getParameter("value"));
+        int value = Integer.getInteger(req.getParameter("value"));
         System.out.println("value = " + value);
         resp.getWriter().println("Client Response : "+value/2);
 
@@ -52,7 +52,7 @@ public class ServletController extends HttpServlet {
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         System.out.println("ServletController.doDelete");
-        int value = Integer.parseInt(req.getParameter("value"));
+        int value = Integer.getInteger(req.getParameter("value"));
         System.out.println("value = " + value);
         resp.getWriter().println("Client Response : "+value%2);
     }
