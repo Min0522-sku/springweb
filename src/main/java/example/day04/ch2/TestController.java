@@ -1,4 +1,4 @@
-package example.day04;
+package example.day04.ch2;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
