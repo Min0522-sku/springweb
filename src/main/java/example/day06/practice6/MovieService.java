@@ -78,7 +78,6 @@ public class MovieService {
             return null;
         }
     }
-
     public boolean 삭제(Integer movieid){
         movieRepository.deleteById(movieid);
         return true;
