@@ -6,6 +6,7 @@ import lombok.Getter;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
@@ -16,6 +17,6 @@ import java.time.LocalDateTime;
 public class BaseTime {
     @CreatedDate // 엔티티 생성날짜/시간 주입
     private LocalDateTime createDate;
-    @LastModifiedBy // 엔티티 수정 날짜/시간 주입
+    @LastModifiedDate // 엔티티 수정 날짜/시간 주입
     private LocalDateTime updateDate;
 }
