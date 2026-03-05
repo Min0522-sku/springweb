@@ -16,7 +16,7 @@ public class GoodsEntity extends BaseTime{
     @GeneratedValue( strategy = GenerationType.IDENTITY  ) //auto_increment
     private Integer gno;
 
-    @Column( name = "제품명", nullable = false, length = 100, unique = true, insertable = true, updatable = true)
+    @Column(nullable = false, length = 100, unique = true, insertable = true, updatable = true)
     // nullable = not null 기본값은 true
     //unique 중복여부 기본값은 false , insertable insert할때 적용여부 기본값은 true, updatable update할때 적용여부 기본값은 true
     private String gname;
@@ -26,4 +26,17 @@ public class GoodsEntity extends BaseTime{
     @Column( columnDefinition = "varchar(100) default '제품설명' not null") // JPA가 아닌 네이티브 실제 sql 쿼리 작성
     private String gdesc;
 
+
+
+    // ** ENTITY --> DTO 변환 함수
+    public GoodsDto toDto(){
+        return GoodsDto.builder()
+                .gno(gno)
+                .gname(gname)
+                .gdesc(gdesc)
+                .gprice(gprice)
+                .createDate(getCreateDate().toString())
+                .updateDate(getUpdateDate().toString())// BaseTime의 멤버변수가 private라 getter setter를 사용해야함
+                .build();
+    }
 }
