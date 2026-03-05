@@ -11,6 +11,12 @@ public class TestService {
     MemberRepository memberRepository;
 
     public List<Member> getAllMembers(){
-        return memberRepository.findAll();
+        return memberRepository.findAll(); // select
+    }
+
+    public boolean saveMember(){
+        Member member = new Member( 0L, "유재석" );
+        memberRepository.save(member); // insert
+        return true;
     }
 }
