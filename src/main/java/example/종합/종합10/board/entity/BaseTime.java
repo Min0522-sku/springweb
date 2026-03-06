@@ -1,5 +1,6 @@
 package example.종합.종합10.board.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;
 import lombok.Getter;
@@ -14,6 +15,7 @@ import java.time.LocalDateTime;
 @EntityListeners(AuditingEntityListener.class)
 public class BaseTime {
     @CreatedDate
+    @Column(updatable = false)
     private LocalDateTime createDate;
     @LastModifiedDate
     private LocalDateTime updateDate;

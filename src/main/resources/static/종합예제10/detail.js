@@ -20,8 +20,27 @@ const 개별조회 = async ()=>{
     `;
     boardBox.innerHTML = html;
 }
+const 댓글조회 = async  () => {
+    const tbody = document.querySelector('#commentBox')
+    let html = '';
+    const response = await axios.get(`/comment?bno=${bno}`);
+    const data = response.data;
+    for(index = 0; index <= data.length-1; index++){
+        const commentDto = data[index];
+        html += `
+                <div style="margin: 20px 0px;">
+                <div><span>${commentDto.cwriter}</span><span>${commentDto.createDate}</span><span> 
+                <button onclick="댓글수정(${commentDto.cno})">수정</button> 
+                <button onclick="댓글삭제(${commentDto.cno})">삭제</button></span>
+                </div>
+                <div> ${commentDto.ccontent} </div>
+                </div>
+             `
+    }
+    tbody.innerHTML = html;
+}
 개별조회();
-
+댓글조회();
 // 개별삭제 함수 정의
 const 삭제 = async ( bno ) => {
     // 1) 현재 게시물 삭제하기 위해 현재게시물번호 확인 ( bno 는 매개변수 또는 쿼리스트링 )
@@ -49,4 +68,41 @@ const 개별수정 = async ( bno ) => {
         alert('수정성공');
         location.reload(); // 현재 페이지 새로고침[F5기능]
     }else{ alert('수정실패');}
-} // f end
+}
+
+const 댓글등록 = async ()=>{
+    const cwriterInput = document.querySelector('.cwriterInput');
+    const ccontentInput = document.querySelector('.ccontentInput');
+    const cwriter = cwriterInput.value;
+    const ccontent = ccontentInput.value;
+
+    const obj = {bno,cwriter,ccontent};
+
+    const response = await axios.post("/comment", obj);
+    const data = response.data;
+    if (data == true){
+        alert('등록성공');
+        location.reload();
+    }else {alert('등록 실패')}
+}
+const 댓글삭제 = async ( cno ) => {
+
+    const response = await axios.delete( `/comment?cno=${ cno }` );
+    const data = response.data;
+    if( data == true ){alert( '삭제성공' ); location.reload()}
+    else{ alert('삭제실패'); }
+}
+
+const 댓글수정 = async ( cno ) => {
+    const ccontent = prompt( '수정할 내용 입력하세요.');
+    const cwriter = prompt( '수정할 작성자 입력하세요.');
+
+    const obj = { cno ,  ccontent , cwriter, bno }; // 수정할 내용들(객체)
+    const response = await axios.put( '/comment' , obj );
+    const data = response.data;
+    // 4] 결과
+    if( data == true ){
+        alert('수정성공');
+        댓글조회();
+    }else{ alert('수정실패');}
+}
