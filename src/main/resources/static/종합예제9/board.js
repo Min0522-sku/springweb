@@ -1,6 +1,6 @@
 console.log("board.js exe");
 
-
+/*
 
 const onFindAll = async () => {
     const tbody = document.querySelector("#boardTable tbody");
@@ -70,3 +70,4 @@ const onDelete = async ( bno ) =>{
     }else{alert("삭제실패")}
 }
 
+*/
