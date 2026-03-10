@@ -19,11 +19,11 @@ public class EnrollEntity extends BaseTime{
     private Integer enrollId;
     private boolean status;
 
-    @ManyToOne
-    @JoinColumn(name = "courseId")
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn( name = "courseId")
     private CourseEntity courseEntity;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "studentId")
     private StudentEntity studentEntity;
 

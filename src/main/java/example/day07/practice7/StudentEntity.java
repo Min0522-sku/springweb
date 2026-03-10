@@ -1,10 +1,10 @@
 package example.day07.practice7;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -19,6 +19,9 @@ public class StudentEntity extends BaseTime{
     private Integer studentId;
     private String studentName;
 
+    @OneToMany( mappedBy = "studentEntity")
+    @ToString.Exclude @Builder.Default
+    private List<EnrollEntity> enrollEntityList = new ArrayList<>();
     public StudentDto toDto(){
         return StudentDto.builder()
                 .studentId(studentId)
