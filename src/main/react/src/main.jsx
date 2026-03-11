@@ -10,8 +10,11 @@ import App from './App.jsx'
 
 // // 챕터 4 예제
 // import Exam1 from './chapter4/Exam.jsx'; //컴포넌트 불러오기
-import Exam2 from './chapter5/Exam2.jsx';
-createRoot(document.querySelector('#root')).render(<Exam2/>);
+//챕터5
+//import Exam2 from './chapter5/Exam2.jsx';
+//챕터6
+import Exam3 from './chapter6/Exam3.jsx';
+createRoot(document.querySelector('#root')).render(<Exam3/>);
 
 
 
