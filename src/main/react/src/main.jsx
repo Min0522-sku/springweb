@@ -2,6 +2,8 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.jsx'
 
+
+
 /* 기존 */
 // createRoot(document.getElementById('root')).render(
 //     <App />
@@ -16,8 +18,12 @@ import App from './App.jsx'
 //챕터6
 //import Exam3 from './chapter6/Exam3.jsx';
 //챕터7
-import Exam1 from './chapter7/Exam1.jsx';
-createRoot(document.querySelector('#root')).render(<Exam1/>);
+//import Exam1 from './chapter7/Exam1.jsx';
+//챕터8
+//import Exam from './chapter8/Exam.jsx';
+//챕터9
+import Exam9 from './chapter9/Exam9.jsx';
+createRoot(document.querySelector('#root')).render(<Exam9/>);
 
 
 
