@@ -1,8 +1,10 @@
-package example.day09.p168;
+package example.day09.챕터6챕터7;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
+@EnableJpaAuditing
 @SpringBootApplication
 public class AppStart {
     public static void main(String[] args) {

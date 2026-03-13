@@ -1,5 +1,8 @@
-package example.day09.p168;
+package example.day09.챕터6챕터7.controller;
 
+import example.day09.챕터6챕터7.dto.ArticleDto;
+import example.day09.챕터6챕터7.service.BlogService;
+import example.day09.챕터6챕터7.entity.ArticleEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

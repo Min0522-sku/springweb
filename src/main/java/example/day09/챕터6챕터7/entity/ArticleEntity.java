@@ -1,13 +1,18 @@
-package example.day09.p168;
+package example.day09.챕터6챕터7.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import java.time.LocalDateTime;
 
 @AllArgsConstructor@NoArgsConstructor@Data@Builder
-
+@EntityListeners(AuditingEntityListener.class)
 @Entity@Table(name = "article")
 public class ArticleEntity {
     @Id
@@ -20,7 +25,12 @@ public class ArticleEntity {
 
     @Column(name = "content", nullable = false)
     private String content;
-
+    @CreatedDate
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
+    @LastModifiedDate
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
     public  ArticleEntity(String title, String content){
         this.title = title;
         this.content = content;
