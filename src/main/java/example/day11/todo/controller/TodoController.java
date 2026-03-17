@@ -70,7 +70,7 @@ public class TodoController {
     }
 
     // 페이징 처리2
-    @GetMapping("/page2")
+    @GetMapping("/page2") //  http://localhost:8080/api/todo/page2?keyword=공&page=1&size=3
     public ResponseEntity<?> page2(@RequestParam String keyword, // 검색어
                                    @RequestParam(defaultValue = "1") int page, //defaultValue 값이 존재하지 않으면 초기값
                                    @RequestParam(defaultValue = "3") int size){
