@@ -115,7 +115,7 @@ public class TodoService {
         // 페이징 옵션, 구현체 만들기
         PageRequest pageRequest = PageRequest.of(page-1, size, Sort.by(Sort.Direction.DESC, "id"));
         // 전체 조회 인지?? 키워드 조회 인지??
-        Page<TodoEntity> result;
+        Page<TodoEntity> result; //  조회 결과 담는 Page 타입
         if (keyword == null || keyword.isBlank()){ //만약 키워드가 비어있으면 전체조회
             result = todoRepository.findAll(pageRequest); // 전체조회 + 페이징처리
         }else { // 아니면 키워드 조회
