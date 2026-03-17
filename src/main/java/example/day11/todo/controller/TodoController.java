@@ -42,10 +42,17 @@ public class TodoController {
     }
 
     // title 과 content 개별조회
-    @GetMapping("/query2")
+    @GetMapping("/query2") // http://localhost:8080/api/todo/query2?title=자바 공부&content=JPA 기본 개념 정리
     public ResponseEntity<?> query2(@RequestParam String title, @RequestParam String content){
         Map<String, Object> result = todoService.query2(title, content);
         return ResponseEntity.status(200).body(result);
+    }
+
+    // title 포함된 조회
+    @GetMapping("/query3") // http://localhost:8080/api/todo/query3?title=실습
+    public ResponseEntity<?> query3(@RequestParam String title){
+        List<TodoDto> result = todoService.query3(title);
+        return ResponseEntity.ok(result);
     }
 
 }

@@ -78,4 +78,17 @@ public class TodoService {
         // 네이티브 쿼리
         return todoRepository.query2(title,content);
     }
+
+    // title 포함된 조회
+    public List<TodoDto> query3(String title){
+        // 쿼리 메소드
+        List<TodoEntity> entityList = todoRepository.findByTitleContaining(title);
+        // 네이티브 쿼리
+        List<TodoEntity> entityList1 = todoRepository.query3(title);
+
+
+        return entityList1.stream()
+                .map(TodoEntity :: toDto) // 엔티티 -> dto 변환
+                .collect(Collectors.toList()); // 최종출력은 List 타입
+    }
 }
