@@ -55,4 +55,25 @@ public class TodoController {
         return ResponseEntity.ok(result);
     }
 
+
+    // 페이징 처리
+    @GetMapping("/page") // http://localhost:8080/api/todo/page?page=1&size=3
+    public ResponseEntity<?> page(@RequestParam int page, // 조회할 현재 페이지 번호
+                                  @RequestParam int size){ // 페이지당 조회할 엔티티 개수
+
+        // page.content : 조회된 엔티티들(list)
+        // page.empty : 조회 실패 또는 없으면 true, 아니며 false
+        // page.totalElements : 전체 자료 개수
+        // page.totalPages : 전체 페이징 개수
+
+        return ResponseEntity.ok(todoService.page(page,size));
+    }
+
+    // 페이징 처리2
+    @GetMapping("/page2")
+    public ResponseEntity<?> page2(@RequestParam String keyword, // 검색어
+                                   @RequestParam(defaultValue = "1") int page, //defaultValue 값이 존재하지 않으면 초기값
+                                   @RequestParam(defaultValue = "3") int size){
+        return ResponseEntity.ok(todoService.page2(keyword, page, size));
+    }
 }
