@@ -7,10 +7,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -70,8 +67,15 @@ public class TodoService {
        TodoEntity entity = todoRepository.findByTitle(title);
         // 네이티브 쿼리 호출
        TodoEntity entity1 = todoRepository.query2(title);
-       return entity.toDto();
+       return entity1.toDto();
     }
 
-
+    // title 과 content 개별조회
+    public Map<String, Object> query2(String title, String content){
+        // 쿼리 메소드
+         Map<String, Object> result = todoRepository.findByTitleAndContent(title,content);
+        System.out.println("result= " + result.toString());
+        // 네이티브 쿼리
+        return todoRepository.query2(title,content);
+    }
 }

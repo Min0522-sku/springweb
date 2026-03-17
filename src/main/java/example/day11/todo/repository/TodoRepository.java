@@ -5,6 +5,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.Map;
+
 @Repository
 public interface TodoRepository extends JpaRepository<TodoEntity, Integer>{
     // JpaRepository 로부터 상속받으면 .save() .find() .delete() 등등 제공 받음
@@ -14,12 +16,16 @@ public interface TodoRepository extends JpaRepository<TodoEntity, Integer>{
     // 쿼리 메소드 : sql 직접 작성하지 않고 추상메소드 이름으로 쿼리 자동 생성 < 카멜 표기법>
         // title 으로 조회, 반환타입 findBy필드명(타입 매개변수);
     TodoEntity findByTitle(String title); // { 구현부 } 없는 추상메소드
-
+        // title 과 content 조회 엔티티/Map findBy필드명And필드명( 타입 매개변수, 타입 매개변수);
+    Map<String, Object> findByTitleAndContent(String title, String content);
     // 네이티브 쿼리
         // 연동된 데이터베이스 쿼리 사용 가능하다
     //@Query(value = "네이티브 SQL문", nativeQuery = true) select * from 찾고자하는 테이블 where 찾을 기준 필드명 = :매개변수명
     @Query(value = "select * from todo where title = :title", nativeQuery = true)
     TodoEntity query2(String title);
+
+    @Query(value = "select * from todo where title = :title and content = :content", nativeQuery = true)
+    Map<String, Object> query2(String title, String content);
 
     // JPQL
 }

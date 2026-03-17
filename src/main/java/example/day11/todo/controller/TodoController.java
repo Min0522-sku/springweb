@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 @RestController
 @RequiredArgsConstructor // final 멤버변수 생성자 제공
@@ -37,6 +39,13 @@ public class TodoController {
     public ResponseEntity<?> query1(@RequestParam String title){
         TodoDto result = todoService.query1(title);
         return  ResponseEntity.ok(result);
+    }
+
+    // title 과 content 개별조회
+    @GetMapping("/query2")
+    public ResponseEntity<?> query2(@RequestParam String title, @RequestParam String content){
+        Map<String, Object> result = todoService.query2(title, content);
+        return ResponseEntity.status(200).body(result);
     }
 
 }
