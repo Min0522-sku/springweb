@@ -7,6 +7,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -123,7 +124,47 @@ public class CrawlingService {
         return map ; // 임의
     }
 
+    // 4] cgv 홈페이지 특정 영화 관람평 크롤링
+    public List<String> test4(){
+        WebDriverManager.chromedriver().setup(); // 크롬설치
+        String url = "https://cgv.co.kr/cnm/cgvChart/movieChart/30000994"; // 크롤링할 주소
+        // * 드라이버 옵션
+        ChromeOptions options = new ChromeOptions();
+        // 크롬 백그라운드 실행
+        //options.addArguments( "--headless=new" , "--disable-gpu");
+        WebDriver webDriver = new ChromeDriver( options ); // 크롬 객체
+        webDriver.get(url);
 
+        // ** 자바에서 js 제어 하여 스크롤을 내리는 작업 **
+        JavascriptExecutor js = (JavascriptExecutor) webDriver; // 현재 크롬 객체에서 js 객체 꺼내기
+        js.executeScript("window.scrollTo(100, document.body.scrollHeight)"); // .executeScript("js문법")
+            // "window.scrollTo(100, document.body.scrollHeight")
+            // document.body.scrollHeight : 현재 화면에서 스크롤 전체 길이 = 높이 예) 300px 상단 꼭지점 = 0 하단꼭지점 = 300
+            // scrollTo(이동할위치, 전체 길이) : 해당 위치로 스크롤
+        try{ Thread.sleep(1000);}catch (Exception e){System.out.println(e);}
+
+        // ** 크롤링할 선택자로 요소 크롤링, reveiwCard_txt__RrTgu
+        List<String> list = new ArrayList<>();
+        for(int page = 1; page <= 10; page++){
+            int startCount = list.size(); // 특정 반복문 시작 전 현재 리뷰 개수
+            //WebElement 1개요소
+            // List<WebElement> 여러개 요소
+            // wait사용시 wait.until() vs webDriver.
+            List<WebElement> elements = webDriver.findElements(By.cssSelector(".reveiwCard_txt__RrTgu"));
+            for (WebElement element : elements){
+                // 만약 리스트에 없는 리뷰면 리스트에 추가 아니면 추가 x
+                String review = element.getText();
+                if (list.contains(review)){continue;}else {list.add(review);}
+            }
+            int endCount = list.size(); // 특정 반복문이 한번 종료 되었을때 리뷰 개수
+            if (startCount == endCount){break;} // 리뷰개수가 시작과 끝 개수가 같다면 크롤링 중지
+
+            // 스크롤 내리기
+            js.executeScript("window.scrollTo(100, document.body.scrollHeight)"); // .executeScript("js문법")
+            try{ Thread.sleep(1000);}catch (Exception e){System.out.println(e);}
+        }
+        return list;
+    }
 
 }
 /*
