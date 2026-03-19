@@ -1,12 +1,22 @@
 package example.day12.크롤링;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
 import lombok.RequiredArgsConstructor;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.chromium.ChromiumDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -79,17 +89,55 @@ public class CrawlingService {
         return list;
     }
 
+    // [3]
+    public Map< String, Object > test3(){
+        // 1] 크롬 드라이버  설치
+        WebDriverManager.chromedriver().setup();
+        // 2] 크롤링 할 웹 주소
+        String url = "https://weather.daum.net/";
+        // 3] 크롬 드라이버 객체 생성
+        // * 드라이버 옵션
+        ChromeOptions options = new ChromeOptions();
+        // 크롬 백그라운드 실행
+        // options.addArguments( "--headless=new" , "--disable-gpu");
+        WebDriver webDriver = new ChromeDriver( options );
+        // 4] 크롬 드라이버 객체 에 크롤링할 주소 넣기
+        webDriver.get( url );
+        // 5] 해당 페이지는 동적( 데이터를 표현하는데 부분적 시간필요) 페이지
+        // new WebDriverWait ( 현재크롬객체 , Duratuon.ofXXX( 시간단위 ) )
+        WebDriverWait wait = new WebDriverWait( webDriver  , Duration.ofSeconds( 1 ) );
+        // 6] 크롤링할 선택자 , element/요소/마크업/<마크업>
+        // WebElement 변수명 = wait.until( ExpectedConditions.presenceOfElementLocated(By.cssSelector("선택자"));
+        // 6-1) 온도 : info_weather -> num_deg
+        WebElement temp = wait.until(ExpectedConditions.presenceOfElementLocated(   By.cssSelector(".info_weather .num_deg")) );
+        System.out.println( temp.getText() ); // 크롤링된 요소/마크업의 텍스트 확인
+        WebElement temp2 = wait.until( ExpectedConditions.presenceOfElementLocated( By.cssSelector(".tooltip_icon .ico_airstat1" ) ) );
+        System.out.println( temp2.getText() );
+        // 7] 가져온 정보들을 dto/map 구성
+        Map< String, Object > map = new HashMap<>();
+        map.put( "온도" , temp2.getText() );
+        map.put( "초미세먼지" , temp.getText() );
+        // 8] 안전하게 드라이버 객체 직접 종료
+        webDriver.quit();
+        // 9] map 반환
+        return map ; // 임의
+    }
+
+
 
 }
 /*
-         -웹 크롤링 : 웹(페이지의) HtML 정보/자료 수집 과정
-         -웹 페이지 마다 크로링 허용 여부 url?robots.txt
-            https://www.jobkorea.co.kr/robots.txt
-         - 정적페이지 : HTML, 동적페이지 : JS(AXIOS/REACT)
-            -정적페이지 : 자바 Jsoup 라이브러리
-            -동적페이지 : Selenium 라이브러리 (파이썬 동일)
+        - 웹크롤링 : 웹(페이지의) HTML 정보/자료 수집 과정
+        - 웹페이지 마다 크롤링 허용 여부 확인 : URL/robots.txt
+            - https://www.jobkorea.co.kr/robots.txt
+        - 정적페이지 : HTML  , 동적페이지 : JS( AXIOS/REACT )
+            - 정적페이지 : Jsoup 라이브러리
+            - 동적페이지 : Selenium 라이브러리 ( * 파이썬 동일 * )
+        - Jsoup 라이브러리 : implementation 'org.jsoup:jsoup:1.22.1'
+        - Selenium 라이브러리 :
+            implementation 'org.seleniumhq.selenium:selenium-java:4.41.0'
+            implementation 'io.github.bonigarcia:webdrivermanager:6.3.3'
 
-         - Jsoup 라이브러리 : // Source: https://mvnrepository.com/artifact/org.jsoup/jsoup
-                               implementation 'org.jsoup:jsoup:1.22.1'
-
-     */
+            - 스프링 지원하는 공식 라이브러리 : https://start.spring.io/
+            - 그외 라이브러리 : http://mvnrepository.com/
+    */
