@@ -38,7 +38,7 @@ public class ApiService {
         String uri = "https://apis.data.go.kr/B552657/ErmctInsttInfoInqireService/getParmacyFullDown";
         uri += "?pageNo=1"; // 페이지 번호
         uri += "&numOfRows=10"; // 페이지당 개수
-        uri += "?serviceKey="+serviceKey; // 함수 밖에 있는 서비스키 대입
+        uri += "&serviceKey="+serviceKey; // 함수 밖에 있는 서비스키 대입
         String response = webClient.get()
                 .uri(uri) // 통신할 주소
                 //.header("Authorization", "Infuser " + serviceKey) // "Infuser " 에 띄어쓰기 하나 필수
