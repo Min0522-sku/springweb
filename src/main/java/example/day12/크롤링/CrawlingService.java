@@ -141,7 +141,7 @@ public class CrawlingService {
             // "window.scrollTo(100, document.body.scrollHeight")
             // document.body.scrollHeight : 현재 화면에서 스크롤 전체 길이 = 높이 예) 300px 상단 꼭지점 = 0 하단꼭지점 = 300
             // scrollTo(이동할위치, 전체 길이) : 해당 위치로 스크롤
-        try{ Thread.sleep(1000);}catch (Exception e){System.out.println(e);}
+        try{ Thread.sleep(2000);}catch (Exception e){System.out.println(e);}
 
         // ** 크롤링할 선택자로 요소 크롤링, reveiwCard_txt__RrTgu
         List<String> list = new ArrayList<>();
