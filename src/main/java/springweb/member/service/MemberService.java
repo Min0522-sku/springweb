@@ -37,7 +37,7 @@ public class MemberService {
     // 2] 로그인
     public boolean login(MemberDto loginDto){
         // JPA으로 아이디로 엔티티찾기 SQL 로 아이디/비밀번호 일치 여부로 로그인 판단 불가능.
-        Optional<MemberEntity> optionalMember = Optional.ofNullable(memberRepository.findByMid(loginDto.getMid()));
+        Optional<MemberEntity> optionalMember = memberRepository.findByMid(loginDto.getMid());
         if(optionalMember.isPresent()){
             MemberEntity memberEntity = optionalMember.get();
             // 비크립트 암호화로 평문과 암호화문 비교 passwordEncoder.matches(평문, 암호문);
@@ -46,6 +46,17 @@ public class MemberService {
             else return false; // 로그인 실패 (패스워드 다를때)
         }
         return false; // 로그인 실패 (아이디 없을때)
+    }
+
+    // 4] 마이페이지
+    public MemberDto myinfo(String loginMid){
+        // 로그인된 mid 받아서 리포지토리에서 찾는다.
+        Optional<MemberEntity> optionalMember = memberRepository.findByMid(loginMid);
+        // 존재하면 dto 변환 하고 반환
+        if (optionalMember.isPresent()){
+            return optionalMember.get().toDto();
+        }
+        return null;
     }
 }
 
@@ -81,13 +92,25 @@ public class MemberService {
             4) 웹통신 : HTTPS( TLS,SSL ), HTTP(암호화 안된 상태)
 
         6. 비크립트
-            1) 설치 :
-                1: 스프링 시큐리티에 포함
-                2: 스프링 시큐리티의 비크립트만 사용
-                    implementation 'org.springframework.security:spring-security-crypto:6.4.4'
-            2) 사용법 :
-                객체 생성 BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-                - String 암호화된 값 = 암호객체.encode(암호화할자료);
-                - boolean 비교결과 = 암호객체.matches(평문, 암호문);
+            1) 정의 : 해시 함수를 이용하여 주로 비밀번호 암호화할 때 사용된다.
+            2) 특징
+                - 솔트(salt) : 같은 비밀번호 라도 랜덤(salt)값 으로 서로 다른 암호화된 결과를 만든다.
+                - 반복연산적용 : 계산식을 여러번 하여 검증 속도 늦춤
+                - 원본 복구 불가능 : 단방향 암호화문으로 비밀번호찾기 대신에 임시비밀번호 부여/수정
+            3) 형태
+                $2a$10$CLkpavbKZByG.DVAKmXYzejPZb73qgYcjhdX7D9FHK/6J23eg25ku
+                - $2a : 비크린트 버전
+                - $10 : 반복연산수 , 제곱근
+                - $CLkpavbKZByG.DVAKmXYze : slat(22글자)
+                - jPZb73qgYcjhdX7D9FHK/6J23eg25ku : 해시값
+                * 평문 과 암호문 비교할때는 암호문의 연산수 와 slat와해기값 으로 평문 을 암호화해서 비교한다.
+
+            4) 설치 :
+                1: SPRING 시큐리티 포함 : implementation 'org.springframework.boot:spring-boot-starter-security'
+                *2: SPRING 시큐리티내 비크립트만 : implementation 'org.springframework.security:spring-security-crypto:6.4.4'
+            5) 사용법
+                BCryptPasswordEncoder 암호객체 = new BCryptPasswordEncoder();
+                - String 암호화된값 = 암호객체.encode( 암호화할자료 )
+                - boolean 비교결과 = 암호객체.matches( 평문 , 암호문 )
 
  */
