@@ -2,6 +2,7 @@ package springweb.board.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import springweb.board.dto.BoardDto;
 import springweb.member.entity.MemberEntity;
 
 @Entity
@@ -25,4 +26,13 @@ public class BoardEntity extends BaseTime{
     @ManyToOne
     @JoinColumn(name = "mno") @ToString.Exclude
     private MemberEntity memberEntity;
+
+    // 조회용으로 필요한거만
+    public BoardDto toDto(){
+        return BoardDto.builder()
+                .bno(bno).btitle(btitle).bcontent(bcontent).bfile(bfile)
+                .mno(memberEntity.getMno())
+                .mname(memberEntity.getMname())
+                .build();
+    }
 }
