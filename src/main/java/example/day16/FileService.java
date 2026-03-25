@@ -6,6 +6,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -30,7 +31,12 @@ public class FileService {
         }
         //업로드
         // 파일명과 경로 연결해서 최종적인 경로 파일객체 생성
-        String fileName = uploadFile.getOriginalFilename();
+            // ** 만약에 서로 다른 사람/요청이 동일한 파일명으로 다른 파일 업로드하면 고유식별 깨짐**
+            // 파일명은 동일하지만 다른 파일일 수 있다. UUID vs 날짜/시간(밀리초)
+        String uuid = UUID.randomUUID().toString(); // UUID란 중복없는 난수 문자열 생성 함수(고유성 확보)
+        // * UUID _ 파일명 : UUID 와 파일명 사이에 _ 언더바로 구분(추후에 분리 해야 하니깐)
+        // * UUID 에는 _ 언더바 존재 못함 하지만 파일명에는 _ 언더바 존재 할 수 있음(파일명 치환)
+        String fileName = uuid+"_"+uploadFile.getOriginalFilename().replace("_", "-");
         File uploadRealPath = new File(uploadDir +fileName);
         try {
             uploadFile.transferTo(uploadRealPath); // 엄로드파일을 특정한 경로에 이송/복사 한다 *예외처리 발생*
