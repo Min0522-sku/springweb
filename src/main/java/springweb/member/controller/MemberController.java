@@ -28,10 +28,12 @@ public class MemberController {
         // 입력받은 아이디/비밀번호를 서비스에게 보낸다
         boolean result = memberService.login(loginDto);
         // 로그인 성공이면 세션 부여
-            // 매개변수에 HttpSession session 받는다
-            // 로그인 성공한 회원의 아이디를 세션객체내 저장 .setAttribute("속성명", 속성값); 세션 저장
-            session.setAttribute("loginMid", loginDto.getMid()); // 서버에 저장하기 때문에 서버 과부화를 예방하기위해 가벼운 속성을 저장하는게 좋음
-        // 아니면 실패
+            if (result) {
+                // 매개변수에 HttpSession session 받는다
+                // 로그인 성공한 회원의 아이디를 세션객체내 저장 .setAttribute("속성명", 속성값); 세션 저장
+                session.setAttribute("loginMid", loginDto.getMid()); // 서버에 저장하기 때문에 서버 과부화를 예방하기위해 가벼운 속성을 저장하는게 좋음
+            }
+            // 아니면 실패
         return ResponseEntity.ok(result);
     }
 
