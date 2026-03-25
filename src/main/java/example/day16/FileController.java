@@ -14,7 +14,11 @@ public class FileController {
     private final FileService fileService;
 
     // 서버에 파일 업로드
-    // uploadFile = org.springframework.web.multipart.support.StandardMultipartHttpServletRequest$StandardMultipartFile@30d9586e
+    // [1] 서버에 파일 업로드
+    // method : post
+    // url : http://localhost:8080/api/file
+    // Headers : Content-Type : multipart/form-data
+    // Body : [text] -> [form]  , uploadFile [ file ] 컴퓨터파일선택
     @PostMapping("")
     public ResponseEntity<?> upload(MultipartFile uploadFile){
         System.out.println("FileController.upload");
