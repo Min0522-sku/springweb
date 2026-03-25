@@ -1,0 +1,55 @@
+package example.day16;
+
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+
+@RestController
+@RequiredArgsConstructor
+@RequestMapping("/api/file")
+public class FileController {
+    private final FileService fileService;
+
+    // 서버에 파일 업로드
+    // uploadFile = org.springframework.web.multipart.support.StandardMultipartHttpServletRequest$StandardMultipartFile@30d9586e
+    @PostMapping("")
+    public ResponseEntity<?> upload(MultipartFile uploadFile){
+        System.out.println("FileController.upload");
+        System.out.println("uploadFile = " + uploadFile);
+        return ResponseEntity.ok(fileService.upload(uploadFile));
+    }
+    // 서버 파일 다운로드
+
+    // 서버 파일 삭제
+}
+
+/*
+    업로드 : 클라이언트가 서버에게 데이터(파일)을 전송하는 행위
+    다운로드 : 서버가 클라이언트에게 데이터(파일)을 전송하는 행위
+    스트림 : 데이터가 이동하는 흐름, 스트림API/ CSV, 엑셀 파일처리 / 네트워크 등등
+    버퍼 : 데이터가 이동하는 흐름간의 처리속도를 일정하게 하기 위한 임시 메모리
+
+    자바 입출력 클래스
+        1) FileInputStream
+        2) ServletOutputStream 등등
+
+    [ 스프링 파일 업로드 구현 ] * 내장 업로드 객체 지원
+        1. MultipartFile 클래스 : 첨부파일(바이트) 매핑하는 인터페이스
+        2. 사용법
+            첨부파일 1개 : MultipartFile 변수명
+            첨부파일 N개 : List<MultipartFile> 변수명
+        3. Content-Type : multipart/form-data
+
+
+
+
+*/
+
+/*
+     (1) 쿼리스트링 방식, URL ? 변수명 = 값
+     (2) 본문 방식, URL, {"변수명" : 값} , Content-Type : application/json
+     (3) 대용량 방식, URL, form, Content-Type : multipart/form-data
+*/
