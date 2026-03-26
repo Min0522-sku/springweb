@@ -43,4 +43,21 @@ public class BoardController {
         if (loginMid == null){return ResponseEntity.ok(false);}
         return ResponseEntity.ok(boardService.write(boardDto, loginMid));
     }
+
+
+    //  토큰 + 첨부파일(Content-Type : multipart/form-data)
+    @PostMapping("/write3")
+    public ResponseEntity<?> write3(BoardDto boardDto, @RequestHeader("Authorization") String token){ // @RequestBody 사용 안함 첨부파일 매핑을 위해
+        // dto에 MultipartFile 인터페이스 포함하기 or 매개변수에 따로 하기 // private MultipartFile uploadFile; Dto에 추가
+
+        if (token == null || !token.startsWith("Bearer")){
+            return ResponseEntity.ok(false);
+        }
+        // 토큰 추출
+        token =  token.replace("Bearer ", "");
+        String loginMid = jwtService.getClaim(token);
+        if (loginMid == null){return ResponseEntity.ok(false);}
+        return ResponseEntity.ok(boardService.write(boardDto, loginMid));
+
+    }
 }
