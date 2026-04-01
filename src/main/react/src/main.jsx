@@ -1,6 +1,8 @@
 import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.jsx'
+import { BrowserRouter } from 'react-router-dom';
+
 //import {BrowserRouter} from "react-router-dom"
 
 
@@ -27,12 +29,20 @@ const root = document.querySelector('#root');
 //import Exam10 from './chapter10/Exam1.jsx';
 //createRoot(document.querySelector('#root')).render(<Exam1/>);
 //챕터 11
-import Exam from './chapter11/Exam.jsx';
-import {BrowserRouter} from "react-router-dom" // import 하기
-// 최초 랜더링 되는 컴포넌트에 BrowserRouter 감싼다
+// import Exam from './chapter11/Exam.jsx';
+// import {BrowserRouter} from "react-router-dom" // import 하기
+// // 최초 랜더링 되는 컴포넌트에 BrowserRouter 감싼다
+// createRoot(root).render(
+//     <BrowserRouter>
+//         <Exam/>
+//     </BrowserRouter>
+// )
+
+//챕터 12
+import Exam12 from './chapter12/Exam12.jsx';
 createRoot(root).render(
     <BrowserRouter>
-        <Exam/>
+        <Exam12></Exam12>
     </BrowserRouter>
 )
 
