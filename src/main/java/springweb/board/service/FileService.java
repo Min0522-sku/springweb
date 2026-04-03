@@ -20,7 +20,7 @@ public class FileService {
     public String upload(MultipartFile uploadFile){
 
         // 파일이 존재 하지 않으면
-        if (uploadFile.isEmpty() == true){return null;} // 업로드 실패
+        if (uploadFile == null || uploadFile.isEmpty() == true){return null;} // 업로드 실패
 
         // 업로드할 파일의 경로 *서버 경로*,    개발자(src파일) --배포/실행--> 서버(build파일) <-- 클라이언트(사용자)
         File uploadPath = new File(uploadDir); // 업로드할  uploadDir 경로 File 객체내 대입
