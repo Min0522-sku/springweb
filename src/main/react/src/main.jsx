@@ -1,6 +1,6 @@
 import { createRoot } from 'react-dom/client'
 import './index.css'
-import App from './App.jsx'
+//import App from './App.jsx'
 import { BrowserRouter } from 'react-router-dom';
 
 //import {BrowserRouter} from "react-router-dom"
@@ -39,10 +39,18 @@ const root = document.querySelector('#root');
 // )
 
 //챕터 12
-import Exam12 from './chapter12/Exam12.jsx';
+// import Exam12 from './chapter12/Exam12.jsx';
+// createRoot(root).render(
+//     <BrowserRouter>
+//         <Exam12></Exam12>
+//     </BrowserRouter>
+// )
+
+// pratice
+import App from './pratice/App.jsx';
 createRoot(root).render(
     <BrowserRouter>
-        <Exam12></Exam12>
+        <App></App>
     </BrowserRouter>
 )
 
