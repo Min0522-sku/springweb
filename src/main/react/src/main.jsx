@@ -47,7 +47,7 @@ const root = document.querySelector('#root');
 // )
 
 // pratice
-import App from './pratice/App.jsx';
+import App from './reactweb/App.jsx';
 createRoot(root).render(
     <BrowserRouter>
         <App></App>
