@@ -11,6 +11,7 @@ import springweb.member.service.MemberService;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/member2")
+@CrossOrigin(value = "http://localhost:5173", exposedHeaders = "Authorization")
 public class MemberController2 {
     private final MemberService memberService;
     private final JWTService jwtService;
